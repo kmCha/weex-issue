@@ -1,0 +1,75 @@
+<template>
+  <scroller class="ct" style="height: {{ctHeight}}">
+    <div class="box1" style="height: {{heightOfBox1}}">
+    </div>
+    <div class="box2">
+      <div class="anchor" ondisappear="handleDis"></div>
+      <text class="anchor-text">我是anchor</text>
+    </div>
+    <div class="decrease-height" onclick="decreaseHeight">
+      <text>缩小高度</text>
+    </div>
+  </scroller>
+</template>
+
+<style>
+  .ct {
+    width: 750;
+    align-items: center;
+    justify-content: center;
+  }
+  .box1 {
+    width: 500;
+    background-color: rgba(0, 255, 0, 0.1);
+  }
+  .box2 {
+    width: 500;
+    height: 2000;
+    background-color: rgba(255, 0, 0, 0.1);
+  }
+  .anchor {
+    width: 5;
+    height: 5;
+    position: absolute;
+    top: -150;
+    left: 0;
+    background-color: #000;
+  }
+  .anchor-text {
+    position: absolute;
+    left: 10;
+    top: -170;
+  }
+  .decrease-height {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 200;
+    height: 100;
+    background-color: rgba(0, 0, 255, 0.1);
+  }
+</style>
+
+<script>
+  var modal = require('@weex-module/modal');
+  module.exports = {
+    data: {
+      ctHeight: 800,
+      heightOfBox1: 800
+    },
+    methods: {
+      decreaseHeight: function() {
+        this.heightOfBox1 -= 200;
+        modal.toast({'message': '高度缩小了', 'duration': 0.3});
+      },
+      handleDis: function(e) {
+        if (e.direction === 'up') {
+          modal.toast({'message': 'disappear', 'duration': 0.3});
+        }
+      }
+    },
+    ready: function () {
+      this.ctHeight = this.$getConfig().env.deviceHeight
+    }
+  }
+</script>
